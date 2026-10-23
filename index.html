@@ -71,29 +71,6 @@
   .section{margin-top:40px;}
   .section-note{color:var(--ink-dim);font-size:14px;margin:0 0 18px;}
 
-  /* Plate diagram */
-  .plate-block{display:flex;flex-direction:column;align-items:center;gap:18px;margin-top:18px;}
-  .plate{
-    width:200px;height:200px;border-radius:50%;
-    background:conic-gradient(var(--sage) 0deg 180deg, var(--slate) 180deg 270deg, var(--tan) 270deg 360deg);
-    position:relative;
-    box-shadow:0 0 0 6px var(--bg-card), 0 0 0 7px var(--line);
-  }
-  .plate::after{
-    content:"";
-    position:absolute;top:50%;left:50%;
-    width:74px;height:74px;
-    background:var(--bg);
-    border-radius:50%;
-    transform:translate(-50%,-50%);
-    box-shadow:0 0 0 1px var(--line);
-  }
-  .legend{width:100%;display:flex;flex-direction:column;gap:8px;}
-  .legend-row{display:flex;align-items:center;gap:10px;font-size:14px;}
-  .swatch{width:12px;height:12px;border-radius:3px;flex:0 0 auto;}
-  .legend-row b{color:var(--ink);font-weight:600;}
-  .legend-row span{color:var(--ink-dim);}
-
   /* Category cards */
   .cat-card{
     background:var(--bg-card);
@@ -121,6 +98,16 @@
     color:var(--ink-dim);
     background:var(--bg-card-alt);
   }
+  .chip.sel-chip{cursor:pointer;-webkit-tap-highlight-color:transparent;user-select:none;}
+  .chip.sel-chip.on{background:var(--gold);color:#1E2A22;border:1px solid var(--gold);font-weight:700;}
+
+  .hl-toggle{
+    display:block;width:100%;margin:0 0 12px;padding:10px 12px;
+    font-family:'Space Mono',monospace;font-size:12.5px;text-align:left;
+    background:var(--bg-card-alt);color:var(--ink-dim);
+    border:1px dashed var(--line);border-radius:8px;cursor:pointer;
+  }
+  .hl-toggle.on{background:var(--gold);color:#1E2A22;border:1px solid var(--gold);font-weight:700;}
 
   /* Meal tabs */
   .meal-tabs{display:flex;gap:8px;margin:0 0 18px;}
@@ -268,23 +255,6 @@
   }
   a.recipe-link:active{transform:scale(0.99);}
 
-  /* Prep rhythm */
-  .prep-step{
-    display:flex;gap:14px;
-    padding:14px 0;
-    border-bottom:1px solid var(--line);
-  }
-  .prep-step:last-child{border-bottom:none;}
-  .prep-day{
-    font-family:'Space Mono',monospace;
-    font-size:12px;
-    color:var(--gold);
-    flex:0 0 78px;
-    padding-top:2px;
-  }
-  .prep-text{color:var(--ink-dim);font-size:14.5px;}
-  .prep-text b{color:var(--ink);font-weight:600;}
-
   /* Shopping list */
   .shop-group{margin-bottom:20px;}
   .shop-group-title{
@@ -325,16 +295,6 @@
   .item-label{transition:color .12s, opacity .12s;}
   .shop-item input:checked ~ .item-label{color:var(--ink-dim);text-decoration:line-through;opacity:0.6;}
 
-  /* Footer note */
-  .footnote{
-    margin-top:40px;
-    padding-top:20px;
-    border-top:1px solid var(--line);
-    color:var(--ink-dim);
-    font-size:13.5px;
-  }
-  .footnote b{color:var(--gold);}
-
   @media (prefers-reduced-motion: reduce){
     *{transition:none !important;}
   }
@@ -344,14 +304,11 @@
 <div class="wrap">
 
   <header>
-    <p class="eyebrow">A working system, not a rulebook</p>
     <h1>The Flexible Plate</h1>
-    <p>Same shape every day, different food every day. Build meals from a small set of swappable pieces instead of following a fixed menu — that's what makes it something you'll still be doing in month three.</p>
   </header>
 
   <div class="section">
     <h2>How do you eat?</h2>
-    <p class="section-note">Filters every suggestion, shuffle, and shopping item below. Vegetarian includes eggs and dairy; vegan drops those too.</p>
     <div class="meal-tabs diet-tabs">
       <button class="diet-tab" data-diet-choice="omni" onclick="setDiet('omni')">Everything</button>
       <button class="diet-tab" data-diet-choice="pescatarian" onclick="setDiet('pescatarian')">Pescatarian</button>
@@ -361,21 +318,7 @@
   </div>
 
   <div class="section">
-    <h2>The shape</h2>
-    <p class="section-note">Every meal follows this ratio. What fills each slice is up to you.</p>
-    <div class="plate-block">
-      <div class="plate"></div>
-      <div class="legend">
-        <div class="legend-row"><span class="swatch" style="background:var(--sage)"></span><b>Vegetables</b><span>— half the plate, any veg, any prep</span></div>
-        <div class="legend-row"><span class="swatch" style="background:var(--slate)"></span><b>Protein</b><span>— a quarter, the one non-negotiable</span></div>
-        <div class="legend-row"><span class="swatch" style="background:var(--tan)"></span><b>Carb</b><span>— a quarter, rice/potato/grain/bread</span></div>
-      </div>
-    </div>
-  </div>
-
-  <div class="section">
     <h2>The building blocks</h2>
-    <p class="section-note">Rotate through these. Pick a meal to see what fits it. Nothing here is mandatory — swap anything for whatever's in the fridge.</p>
     <div class="meal-tabs">
       <button class="meal-tab" data-meal="breakfast" onclick="setMeal('breakfast')">Breakfast</button>
       <button class="meal-tab" data-meal="lunch" onclick="setMeal('lunch')">Lunch</button>
@@ -401,7 +344,6 @@
 
   <div class="section">
     <h2>One flexible thing a day</h2>
-    <p class="section-note">Not part of the plate. One thing a day with no rules attached.</p>
     <div class="cat-card">
       <div class="chip-row">
         <span class="chip">dark chocolate</span><span class="chip">small dessert</span><span class="chip">a drink</span>
@@ -412,7 +354,6 @@
 
   <div class="section">
     <h2>Can't decide? Shuffle it.</h2>
-    <p class="section-note">Pulls one item from each category, using only ingredients that suit the meal you pick — a reminder that "on plan" covers a lot more ground than it feels like.</p>
     <div class="meal-tabs">
       <button class="meal-tab" data-meal="breakfast" onclick="setMeal('breakfast')">Breakfast</button>
       <button class="meal-tab" data-meal="lunch" onclick="setMeal('lunch')">Lunch</button>
@@ -420,6 +361,7 @@
     </div>
     <div class="shuffle-box">
       <div class="shuffle-result" id="result">Tap shuffle to build a plate</div>
+      <button class="hl-toggle on" id="hlToggle1" aria-pressed="true" onclick="toggleHighlights(1)">Use highlighted ingredients: ON</button>
       <button class="shuffle-btn" onclick="shufflePlate()">Shuffle my plate</button>
       <button class="recipe-btn" id="recipeBtn1" onclick="findRecipes([lastPlate], 'recipes1', lastPlateMeal)" disabled>Search Google for recipes</button>
       <div class="recipe-results" id="recipes1"></div>
@@ -428,7 +370,6 @@
 
   <div class="section">
     <h2>Shopping for the week? Shuffle 3.</h2>
-    <p class="section-note">Three combos at once for the meal you pick, so you can shop once and rotate through them instead of guessing meal-by-meal.</p>
     <div class="meal-tabs">
       <button class="meal-tab" data-meal="breakfast" onclick="setMeal('breakfast')">Breakfast</button>
       <button class="meal-tab" data-meal="lunch" onclick="setMeal('lunch')">Lunch</button>
@@ -436,6 +377,7 @@
     </div>
     <div class="shuffle-box">
       <div class="shuffle-list" id="result3"><div class="placeholder">Tap shuffle to build 3 meals</div></div>
+      <button class="hl-toggle" id="hlToggle3" aria-pressed="false" onclick="toggleHighlights(3)">Use highlighted ingredients: OFF</button>
       <button class="shuffle-btn" onclick="shuffleThree()">Shuffle 3 meals</button>
       <button class="recipe-btn" id="recipeBtn3" onclick="findRecipes(last3Meals, 'recipes3', last3Meal)" disabled>Search Google for these 3</button>
       <div class="recipe-results" id="recipes3"></div>
@@ -443,23 +385,7 @@
   </div>
 
   <div class="section">
-    <h2>The prep rhythm</h2>
-    <p class="section-note">Two sessions a week keep the building blocks stocked without turning cooking into a daily chore.</p>
-    <div class="cat-card">
-      <div class="prep-step">
-        <div class="prep-day">SUNDAY<br>~45 min</div>
-        <div class="prep-text" id="prepSunday"></div>
-      </div>
-      <div class="prep-step">
-        <div class="prep-day">WEDNESDAY<br>~20 min</div>
-        <div class="prep-text" id="prepWednesday"></div>
-      </div>
-    </div>
-  </div>
-
-  <div class="section">
     <h2>Shopping list</h2>
-    <p class="section-note">Grouped to match the building blocks above. Tap to check off.</p>
 
     <div class="shop-group">
       <p class="shop-group-title">Protein</p>
@@ -500,10 +426,6 @@
       <label class="shop-item"><input type="checkbox"><span class="box"></span><span class="item-label">Sparkling water (swap for soda)</span></label>
       <label class="shop-item"><input type="checkbox"><span class="box"></span><span class="item-label">Small dark chocolate bar / treat of choice</span></label>
     </div>
-  </div>
-
-  <div class="footnote">
-    <p><b>On the sugar/processed swap:</b> start with drinks first — that's the biggest single change for the least effort. Then trade one pantry item at a time for a whole-food version instead of clearing everything out at once.</p>
   </div>
 
 </div>
@@ -547,28 +469,7 @@
   }
   function proteinsFor(meal){ return MEALS[meal].protein.filter(allowed); }
 
-  const PREP = {
-    omni: {
-      sun: "roast or grill a large tray of one protein, cook a big pot of rice or quinoa, roast a full sheet pan of vegetables, hard-boil a dozen eggs.",
-      wed: "a second quick protein (ground turkey, beans), restock fresh veg, refill the treat."
-    },
-    pescatarian: {
-      sun: "cook a big pot of rice or quinoa, roast a full sheet pan of vegetables, hard-boil a dozen eggs, and simmer a pot of lentils or beans for the first half of the week.",
-      wed: "cook fresh fish (salmon, cod, or shrimp take 10–15 min, and cooked fish only keeps a few days), add a quick tofu or bean dish, restock fresh veg, refill the treat."
-    },
-    vegetarian: {
-      sun: "bake a tray of tofu or tempeh, simmer a big pot of lentils or beans, cook rice or quinoa, roast a full sheet pan of vegetables, hard-boil a dozen eggs.",
-      wed: "a second quick protein (a veggie scramble, paneer or halloumi, chickpeas), restock fresh veg, refill the treat."
-    },
-    vegan: {
-      sun: "bake a tray of tofu or tempeh, simmer a big pot of lentils or beans, cook rice or quinoa, roast a full sheet pan of vegetables.",
-      wed: "a second quick protein (chickpeas, edamame, or a tofu scramble), restock fresh veg, refill the treat."
-    }
-  };
-
   function applyDietVisibility(){
-    document.getElementById('prepSunday').innerHTML = '<b>Big batch:</b> ' + PREP[currentDiet].sun;
-    document.getElementById('prepWednesday').innerHTML = '<b>Top-up:</b> ' + PREP[currentDiet].wed;
     document.querySelectorAll('[data-diet]').forEach(el => {
       const t = el.dataset.diet;
       el.hidden = (t === 'meat' && currentDiet !== 'omni') ||
@@ -598,8 +499,28 @@
 
   function pick(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
 
-  function renderChips(id, items){
-    document.getElementById(id).innerHTML = items.map(i => '<span class="chip">' + i + '</span>').join('');
+  // Tapped (highlighted) building-block items, per category. Empty = use everything.
+  const selected = { protein: new Set(), veg: new Set(), carb: new Set() };
+
+  function renderChips(id, items, cat){
+    const row = document.getElementById(id);
+    row.innerHTML = '';
+    items.forEach(i => {
+      const b = document.createElement('span');
+      b.className = 'chip sel-chip' + (selected[cat].has(i) ? ' on' : '');
+      b.textContent = i;
+      b.onclick = () => {
+        if (selected[cat].has(i)) selected[cat].delete(i); else selected[cat].add(i);
+        b.classList.toggle('on');
+      };
+      row.appendChild(b);
+    });
+  }
+
+  // Highlighted items that are available right now; falls back to the full list if none.
+  function pool(cat, items){
+    const hit = items.filter(i => selected[cat].has(i));
+    return hit.length ? hit : items;
   }
 
   function setMeal(meal){
@@ -607,9 +528,9 @@
     document.querySelectorAll('.meal-tab').forEach(b =>
       b.classList.toggle('active', b.dataset.meal === meal));
     const m = MEALS[meal];
-    renderChips('chips-protein', proteinsFor(meal));
-    renderChips('chips-veg', m.veg);
-    renderChips('chips-carb', m.carb.filter(allowed));
+    renderChips('chips-protein', proteinsFor(meal), 'protein');
+    renderChips('chips-veg', m.veg, 'veg');
+    renderChips('chips-carb', m.carb.filter(allowed), 'carb');
     document.getElementById('veg-title').textContent = m.label;
     // clear any results built for a different meal
     document.getElementById('result').textContent = 'Tap shuffle to build a plate';
@@ -621,9 +542,21 @@
     lastPlate = null; last3Meals = [];
   }
 
+  let useHighlights1 = true, useHighlights3 = false;
+  function toggleHighlights(which){
+    const on = which === 1 ? (useHighlights1 = !useHighlights1) : (useHighlights3 = !useHighlights3);
+    const b = document.getElementById('hlToggle' + which);
+    b.classList.toggle('on', on);
+    b.setAttribute('aria-pressed', String(on));
+    b.textContent = 'Use highlighted ingredients: ' + (on ? 'ON' : 'OFF');
+  }
+
   function shufflePlate(){
     const m = MEALS[currentMeal];
-    const p = pick(proteinsFor(currentMeal)), v = pick(m.veg), c = pick(m.carb.filter(allowed));
+    const src = (cat, items) => useHighlights1 ? pool(cat, items) : items;
+    const p = pick(src('protein', proteinsFor(currentMeal))),
+          v = pick(src('veg', m.veg)),
+          c = pick(src('carb', m.carb.filter(allowed)));
     lastPlate = v + ' + ' + p + ' + ' + c;
     lastPlateMeal = currentMeal;
     document.getElementById('result').innerHTML =
@@ -642,9 +575,10 @@
 
   function shuffleThree(){
     const m = MEALS[currentMeal];
-    const proteins = pickN(proteinsFor(currentMeal), 3);
-    const vegs = pickN(m.veg, 3);
-    const carbs = pickN(m.carb.filter(allowed), 3);
+    const src = (cat, items) => useHighlights3 ? pool(cat, items) : items;
+    const proteins = pickN(src('protein', proteinsFor(currentMeal)), 3);
+    const vegs = pickN(src('veg', m.veg), 3);
+    const carbs = pickN(src('carb', m.carb.filter(allowed)), 3);
     last3Meal = currentMeal;
     last3Meals = [0,1,2].map(idx => vegs[idx] + ' + ' + proteins[idx] + ' + ' + carbs[idx]);
     const rows = [1,2,3].map(i => {
