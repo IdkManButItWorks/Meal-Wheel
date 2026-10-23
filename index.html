@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Flexible Plate</title>
+<link rel="icon" type="image/png" href="data:image/png;base64,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">
+<link rel="apple-touch-icon" href="data:image/png;base64,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">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Flexible Plate">
+<meta name="theme-color" content="#1E2A22">
+<link rel="manifest" id="app-manifest">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#1E2A22;
+    --bg-card:#263B2C;
+    --bg-card-alt:#2E4534;
+    --ink:#F2EDE0;
+    --ink-dim:#B9C2AB;
+    --gold:#D9A441;
+    --coral:#E0785C;
+    --sage:#9CB380;
+    --slate:#7C97AE;
+    --tan:#C9A66B;
+    --line:rgba(242,237,224,0.14);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    line-height:1.5;
+    padding:0 0 60px;
+  }
+  .wrap{max-width:520px;margin:0 auto;padding:28px 20px;}
+
+  /* Header */
+  header{padding:8px 0 22px;border-bottom:1px solid var(--line);}
+  .eyebrow{
+    font-family:'Space Mono',monospace;
+    font-size:12px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--gold);
+    margin:0 0 10px;
+  }
+  h1{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    font-size:34px;
+    line-height:1.08;
+    margin:0 0 12px;
+    color:var(--ink);
+  }
+  header p{color:var(--ink-dim);font-size:15px;margin:0;max-width:42ch;}
+
+  /* Section headings */
+  h2{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    font-size:21px;
+    margin:0 0 4px;
+    color:var(--ink);
+  }
+  .section{margin-top:40px;}
+  .section-note{color:var(--ink-dim);font-size:14px;margin:0 0 18px;}
+
+  /* Plate diagram */
+  .plate-block{display:flex;flex-direction:column;align-items:center;gap:18px;margin-top:18px;}
+  .plate{
+    width:200px;height:200px;border-radius:50%;
+    background:conic-gradient(var(--sage) 0deg 180deg, var(--slate) 180deg 270deg, var(--tan) 270deg 360deg);
+    position:relative;
+    box-shadow:0 0 0 6px var(--bg-card), 0 0 0 7px var(--line);
+  }
+  .plate::after{
+    content:"";
+    position:absolute;top:50%;left:50%;
+    width:74px;height:74px;
+    background:var(--bg);
+    border-radius:50%;
+    transform:translate(-50%,-50%);
+    box-shadow:0 0 0 1px var(--line);
+  }
+  .legend{width:100%;display:flex;flex-direction:column;gap:8px;}
+  .legend-row{display:flex;align-items:center;gap:10px;font-size:14px;}
+  .swatch{width:12px;height:12px;border-radius:3px;flex:0 0 auto;}
+  .legend-row b{color:var(--ink);font-weight:600;}
+  .legend-row span{color:var(--ink-dim);}
+
+  /* Category cards */
+  .cat-card{
+    background:var(--bg-card);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:18px 18px 16px;
+    margin-bottom:14px;
+  }
+  .cat-head{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+  .dot{width:10px;height:10px;border-radius:50%;flex:0 0 auto;}
+  .cat-title{
+    font-family:'Space Mono',monospace;
+    font-size:12px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--ink);
+  }
+  .chip-row{display:flex;flex-wrap:wrap;gap:8px;}
+  .chip{
+    font-family:'Space Mono',monospace;
+    font-size:12.5px;
+    padding:6px 10px;
+    border:1px dashed var(--line);
+    border-radius:7px;
+    color:var(--ink-dim);
+    background:var(--bg-card-alt);
+  }
+
+  /* Meal tabs */
+  .meal-tabs{display:flex;gap:8px;margin:0 0 18px;}
+  .meal-tab, .diet-tab{
+    flex:1;
+    font-family:'Space Mono',monospace;
+    font-size:12px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    background:transparent;
+    color:var(--ink-dim);
+    border:1px solid var(--line);
+    padding:10px 6px;
+    border-radius:9px;
+    cursor:pointer;
+  }
+  .meal-tab.active, .diet-tab.active{background:var(--gold);color:#1E2A22;border-color:var(--gold);font-weight:700;}
+  .diet-tab.active{background:var(--sage);border-color:var(--sage);}
+  .diet-tab:not(.active):active{transform:scale(0.98);}
+  .diet-tabs{display:grid;grid-template-columns:1fr 1fr;}
+  [hidden]{display:none !important;}
+  .meal-tab:not(.active):active{transform:scale(0.98);}
+
+  /* Shuffle */
+  .shuffle-box{
+    background:var(--bg-card);
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:22px 20px;
+    margin-top:22px;
+    text-align:center;
+  }
+  .shuffle-result{
+    font-family:'Fraunces',serif;
+    font-size:19px;
+    font-weight:600;
+    margin:14px 0 18px;
+    min-height:56px;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .shuffle-result .plus{color:var(--gold);margin:0 6px;font-family:'Inter',sans-serif;font-weight:400;}
+  button.shuffle-btn{
+    font-family:'Space Mono',monospace;
+    font-size:13px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    background:var(--gold);
+    color:#1E2A22;
+    border:none;
+    padding:13px 22px;
+    border-radius:9px;
+    cursor:pointer;
+    font-weight:700;
+  }
+  button.shuffle-btn:active{transform:scale(0.98);}
+
+  .shuffle-list{
+    text-align:left;
+    margin:6px 0 18px;
+    min-height:56px;
+  }
+  .shuffle-list .placeholder{
+    text-align:center;
+    color:var(--ink-dim);
+    font-family:'Fraunces',serif;
+    font-size:17px;
+    padding:14px 0;
+  }
+  .meal-row{
+    display:flex;
+    align-items:baseline;
+    gap:12px;
+    padding:11px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .meal-row:last-child{border-bottom:none;}
+  .meal-num{
+    font-family:'Space Mono',monospace;
+    font-size:12px;
+    color:var(--gold);
+    flex:0 0 20px;
+  }
+  .meal-combo{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    font-size:16px;
+    color:var(--ink);
+  }
+  .meal-combo .plus{color:var(--gold);margin:0 5px;font-family:'Inter',sans-serif;font-weight:400;}
+
+  button.recipe-btn{
+    font-family:'Space Mono',monospace;
+    font-size:12px;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    background:transparent;
+    color:var(--gold);
+    border:1px solid var(--gold);
+    padding:10px 18px;
+    border-radius:9px;
+    cursor:pointer;
+    margin-top:10px;
+  }
+  button.recipe-btn:disabled{
+    color:var(--ink-dim);
+    border-color:var(--line);
+    cursor:not-allowed;
+  }
+  button.recipe-btn:not(:disabled):active{transform:scale(0.98);}
+
+  .recipe-results{
+    text-align:left;
+    margin-top:14px;
+  }
+  .recipe-results:empty{margin-top:0;}
+  .recipe-loading{
+    color:var(--ink-dim);
+    font-size:14px;
+    font-family:'Space Mono',monospace;
+    text-align:center;
+    padding:8px 0;
+  }
+  .recipe-error{
+    color:var(--coral);
+    font-size:13.5px;
+    text-align:center;
+    padding:8px 0;
+  }
+  .recipe-card{
+    background:var(--bg-card-alt);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:14px 16px;
+    margin-top:10px;
+    font-size:14px;
+    color:var(--ink-dim);
+    white-space:pre-wrap;
+    line-height:1.55;
+  }
+
+  a.recipe-link{
+    display:block;
+    text-decoration:none;
+    color:var(--gold);
+  }
+  a.recipe-link:active{transform:scale(0.99);}
+
+  /* Prep rhythm */
+  .prep-step{
+    display:flex;gap:14px;
+    padding:14px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .prep-step:last-child{border-bottom:none;}
+  .prep-day{
+    font-family:'Space Mono',monospace;
+    font-size:12px;
+    color:var(--gold);
+    flex:0 0 78px;
+    padding-top:2px;
+  }
+  .prep-text{color:var(--ink-dim);font-size:14.5px;}
+  .prep-text b{color:var(--ink);font-weight:600;}
+
+  /* Shopping list */
+  .shop-group{margin-bottom:20px;}
+  .shop-group-title{
+    font-family:'Space Mono',monospace;
+    font-size:12px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--ink-dim);
+    margin:0 0 10px;
+    padding-bottom:6px;
+    border-bottom:1px solid var(--line);
+  }
+  .shop-item{
+    display:flex;align-items:center;gap:12px;
+    padding:9px 2px;
+    font-size:15px;
+    cursor:pointer;
+    user-select:none;
+  }
+  .shop-item input{display:none;}
+  .box{
+    width:19px;height:19px;flex:0 0 auto;
+    border:1.5px solid var(--ink-dim);
+    border-radius:5px;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .box::after{
+    content:"";
+    width:10px;height:10px;
+    border-radius:2px;
+    background:var(--gold);
+    opacity:0;
+    transform:scale(0.5);
+    transition:opacity .12s, transform .12s;
+  }
+  .shop-item input:checked ~ .box::after{opacity:1;transform:scale(1);}
+  .shop-item input:checked ~ .box{border-color:var(--gold);}
+  .item-label{transition:color .12s, opacity .12s;}
+  .shop-item input:checked ~ .item-label{color:var(--ink-dim);text-decoration:line-through;opacity:0.6;}
+
+  /* Footer note */
+  .footnote{
+    margin-top:40px;
+    padding-top:20px;
+    border-top:1px solid var(--line);
+    color:var(--ink-dim);
+    font-size:13.5px;
+  }
+  .footnote b{color:var(--gold);}
+
+  @media (prefers-reduced-motion: reduce){
+    *{transition:none !important;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <p class="eyebrow">A working system, not a rulebook</p>
+    <h1>The Flexible Plate</h1>
+    <p>Same shape every day, different food every day. Build meals from a small set of swappable pieces instead of following a fixed menu — that's what makes it something you'll still be doing in month three.</p>
+  </header>
+
+  <div class="section">
+    <h2>How do you eat?</h2>
+    <p class="section-note">Filters every suggestion, shuffle, and shopping item below. Vegetarian includes eggs and dairy; vegan drops those too.</p>
+    <div class="meal-tabs diet-tabs">
+      <button class="diet-tab" data-diet-choice="omni" onclick="setDiet('omni')">Everything</button>
+      <button class="diet-tab" data-diet-choice="pescatarian" onclick="setDiet('pescatarian')">Pescatarian</button>
+      <button class="diet-tab" data-diet-choice="vegetarian" onclick="setDiet('vegetarian')">Vegetarian</button>
+      <button class="diet-tab" data-diet-choice="vegan" onclick="setDiet('vegan')">Vegan</button>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>The shape</h2>
+    <p class="section-note">Every meal follows this ratio. What fills each slice is up to you.</p>
+    <div class="plate-block">
+      <div class="plate"></div>
+      <div class="legend">
+        <div class="legend-row"><span class="swatch" style="background:var(--sage)"></span><b>Vegetables</b><span>— half the plate, any veg, any prep</span></div>
+        <div class="legend-row"><span class="swatch" style="background:var(--slate)"></span><b>Protein</b><span>— a quarter, the one non-negotiable</span></div>
+        <div class="legend-row"><span class="swatch" style="background:var(--tan)"></span><b>Carb</b><span>— a quarter, rice/potato/grain/bread</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>The building blocks</h2>
+    <p class="section-note">Rotate through these. Pick a meal to see what fits it. Nothing here is mandatory — swap anything for whatever's in the fridge.</p>
+    <div class="meal-tabs">
+      <button class="meal-tab" data-meal="breakfast" onclick="setMeal('breakfast')">Breakfast</button>
+      <button class="meal-tab" data-meal="lunch" onclick="setMeal('lunch')">Lunch</button>
+      <button class="meal-tab" data-meal="dinner" onclick="setMeal('dinner')">Dinner</button>
+    </div>
+
+    <div class="cat-card">
+      <div class="cat-head"><span class="dot" style="background:var(--slate)"></span><span class="cat-title">Protein</span></div>
+      <div class="chip-row" id="chips-protein"></div>
+    </div>
+
+    <div class="cat-card">
+      <div class="cat-head"><span class="dot" style="background:var(--sage)"></span><span class="cat-title" id="veg-title">Vegetables</span></div>
+      <div class="chip-row" id="chips-veg"></div>
+    </div>
+
+    <div class="cat-card">
+      <div class="cat-head"><span class="dot" style="background:var(--tan)"></span><span class="cat-title">Carb</span></div>
+      <div class="chip-row" id="chips-carb"></div>
+    </div>
+
+  </div>
+
+  <div class="section">
+    <h2>One flexible thing a day</h2>
+    <p class="section-note">Not part of the plate. One thing a day with no rules attached.</p>
+    <div class="cat-card">
+      <div class="chip-row">
+        <span class="chip">dark chocolate</span><span class="chip">small dessert</span><span class="chip">a drink</span>
+        <span class="chip">takeout meal</span><span class="chip">whatever you're craving</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Can't decide? Shuffle it.</h2>
+    <p class="section-note">Pulls one item from each category, using only ingredients that suit the meal you pick — a reminder that "on plan" covers a lot more ground than it feels like.</p>
+    <div class="meal-tabs">
+      <button class="meal-tab" data-meal="breakfast" onclick="setMeal('breakfast')">Breakfast</button>
+      <button class="meal-tab" data-meal="lunch" onclick="setMeal('lunch')">Lunch</button>
+      <button class="meal-tab" data-meal="dinner" onclick="setMeal('dinner')">Dinner</button>
+    </div>
+    <div class="shuffle-box">
+      <div class="shuffle-result" id="result">Tap shuffle to build a plate</div>
+      <button class="shuffle-btn" onclick="shufflePlate()">Shuffle my plate</button>
+      <button class="recipe-btn" id="recipeBtn1" onclick="findRecipes([lastPlate], 'recipes1', lastPlateMeal)" disabled>Search Google for recipes</button>
+      <div class="recipe-results" id="recipes1"></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Shopping for the week? Shuffle 3.</h2>
+    <p class="section-note">Three combos at once for the meal you pick, so you can shop once and rotate through them instead of guessing meal-by-meal.</p>
+    <div class="meal-tabs">
+      <button class="meal-tab" data-meal="breakfast" onclick="setMeal('breakfast')">Breakfast</button>
+      <button class="meal-tab" data-meal="lunch" onclick="setMeal('lunch')">Lunch</button>
+      <button class="meal-tab" data-meal="dinner" onclick="setMeal('dinner')">Dinner</button>
+    </div>
+    <div class="shuffle-box">
+      <div class="shuffle-list" id="result3"><div class="placeholder">Tap shuffle to build 3 meals</div></div>
+      <button class="shuffle-btn" onclick="shuffleThree()">Shuffle 3 meals</button>
+      <button class="recipe-btn" id="recipeBtn3" onclick="findRecipes(last3Meals, 'recipes3', last3Meal)" disabled>Search Google for these 3</button>
+      <div class="recipe-results" id="recipes3"></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>The prep rhythm</h2>
+    <p class="section-note">Two sessions a week keep the building blocks stocked without turning cooking into a daily chore.</p>
+    <div class="cat-card">
+      <div class="prep-step">
+        <div class="prep-day">SUNDAY<br>~45 min</div>
+        <div class="prep-text" id="prepSunday"></div>
+      </div>
+      <div class="prep-step">
+        <div class="prep-day">WEDNESDAY<br>~20 min</div>
+        <div class="prep-text" id="prepWednesday"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Shopping list</h2>
+    <p class="section-note">Grouped to match the building blocks above. Tap to check off.</p>
+
+    <div class="shop-group">
+      <p class="shop-group-title">Protein</p>
+      <label class="shop-item" data-diet="meat"><input type="checkbox"><span class="box"></span><span class="item-label">Chicken thighs (2–3 lb)</span></label>
+      <label class="shop-item" data-diet="animal"><input type="checkbox"><span class="box"></span><span class="item-label">Eggs (dozen)</span></label>
+      <label class="shop-item" data-diet="fish"><input type="checkbox"><span class="box"></span><span class="item-label">Salmon or white fish</span></label>
+      <label class="shop-item" data-diet="meat"><input type="checkbox"><span class="box"></span><span class="item-label">Ground turkey</span></label>
+      <label class="shop-item" data-diet="animal"><input type="checkbox"><span class="box"></span><span class="item-label">Greek yogurt</span></label>
+      <label class="shop-item"><input type="checkbox"><span class="box"></span><span class="item-label">Canned or dry beans</span></label>
+      <label class="shop-item"><input type="checkbox"><span class="box"></span><span class="item-label">Tofu</span></label>
+    </div>
+
+    <div class="shop-group">
+      <p class="shop-group-title">Produce</p>
+      <label class="shop-item"><input type="checkbox"><span class="box"></span><span class="item-label">Broccoli</span></label>
+      <label class="shop-item"><input type="checkbox"><span class="box"></span><span class="item-label">Spinach or mixed greens</span></label>
+      <label class="shop-item"><input type="checkbox"><span class="box"></span><span class="item-label">Bell peppers</span></label>
+      <label class="shop-item"><input type="checkbox"><span class="box"></span><span class="item-label">Zucchini</span></label>
+      <label class="shop-item"><input type="checkbox"><span class="box"></span><span class="item-label">Carrots / cucumber</span></label>
+      <label class="shop-item"><input type="checkbox"><span class="box"></span><span class="item-label">Bag of frozen mixed veg</span></label>
+    </div>
+
+    <div class="shop-group">
+      <p class="shop-group-title">Carbs / grains</p>
+      <label class="shop-item"><input type="checkbox"><span class="box"></span><span class="item-label">Rice</span></label>
+      <label class="shop-item"><input type="checkbox"><span class="box"></span><span class="item-label">Sweet potatoes</span></label>
+      <label class="shop-item"><input type="checkbox"><span class="box"></span><span class="item-label">Quinoa</span></label>
+      <label class="shop-item"><input type="checkbox"><span class="box"></span><span class="item-label">Whole grain bread</span></label>
+      <label class="shop-item"><input type="checkbox"><span class="box"></span><span class="item-label">Oats</span></label>
+    </div>
+
+    <div class="shop-group">
+      <p class="shop-group-title">Pantry / extras</p>
+      <label class="shop-item"><input type="checkbox"><span class="box"></span><span class="item-label">Olive oil</span></label>
+      <label class="shop-item"><input type="checkbox"><span class="box"></span><span class="item-label">Simple seasonings (garlic, paprika, salt/pepper)</span></label>
+      <label class="shop-item" data-diet="animal"><input type="checkbox"><span class="box"></span><span class="item-label">Plain yogurt (swap for flavored)</span></label>
+      <label class="shop-item" data-diet="vegan"><input type="checkbox"><span class="box"></span><span class="item-label">Unsweetened soy or oat yogurt</span></label>
+      <label class="shop-item"><input type="checkbox"><span class="box"></span><span class="item-label">Sparkling water (swap for soda)</span></label>
+      <label class="shop-item"><input type="checkbox"><span class="box"></span><span class="item-label">Small dark chocolate bar / treat of choice</span></label>
+    </div>
+  </div>
+
+  <div class="footnote">
+    <p><b>On the sugar/processed swap:</b> start with drinks first — that's the biggest single change for the least effort. Then trade one pantry item at a time for a whole-food version instead of clearing everything out at once.</p>
+  </div>
+
+</div>
+
+<script>
+  const MEALS = {
+    breakfast: {
+      label: "Veg & fruit",
+      protein: ["eggs","egg whites","greek yogurt","cottage cheese","turkey sausage","smoked salmon","tofu scramble","canadian bacon","peanut butter","skyr","protein powder (in oats)","black beans","soy yogurt","chickpea scramble","edamame","almond butter"],
+      veg: ["spinach","tomatoes","bell peppers","mushrooms","onions","kale","zucchini","avocado","berries","banana","apple slices","orange","peaches","frozen veg mix"],
+      carb: ["oats","whole grain toast","english muffin","whole grain bagel","sweet potato hash","home fries","a tortilla","granola","grits","whole grain waffle","overnight oats","breakfast potatoes"]
+    },
+    lunch: {
+      label: "Vegetables",
+      protein: ["chicken breast","tuna","sliced turkey","hard-boiled eggs","chickpeas","black beans","lentils","tofu","grilled shrimp","cottage cheese","hummus","ground turkey","white beans","canned salmon"],
+      veg: ["mixed greens","cucumber","cherry tomatoes","carrots","bell peppers","spinach","broccoli","celery","red onion","cabbage slaw","radishes","roasted veg","snap peas","corn"],
+      carb: ["whole grain bread","a tortilla wrap","pita","quinoa","brown rice","sweet potato","whole wheat pasta","farro","couscous","potatoes","rice","naan","crackers"]
+    },
+    dinner: {
+      label: "Vegetables",
+      protein: ["chicken thighs","salmon","ground turkey","lean ground beef","steak","shrimp","pork tenderloin","cod","tofu","beans","lentils","turkey meatballs","chicken sausage","tempeh","chickpeas","paneer","halloumi","eggs (shakshuka-style)","tuna steak"],
+      veg: ["broccoli","zucchini","asparagus","green beans","brussels sprouts","cauliflower","bell peppers","spinach","mushrooms","eggplant","bok choy","carrots","cabbage","frozen veg mix","mixed greens","kale"],
+      carb: ["rice","sweet potato","potatoes","quinoa","pasta","rice noodles","couscous","polenta","farro","crusty bread","a tortilla","orzo","brown rice"]
+    }
+  };
+
+  // Diet tagging: pescatarian = fish OK, no meat; vegetarian = no meat or fish (eggs & dairy OK); vegan = also no eggs or dairy
+  const MEAT = ["turkey sausage","canadian bacon","chicken breast","sliced turkey","ground turkey","chicken thighs","lean ground beef","steak","pork tenderloin","turkey meatballs","chicken sausage"];
+  const FISH = ["smoked salmon","tuna","grilled shrimp","canned salmon","salmon","shrimp","cod","tuna steak"];
+  const DAIRY_EGG = ["eggs","egg whites","greek yogurt","cottage cheese","skyr","protein powder (in oats)","hard-boiled eggs","paneer","halloumi","eggs (shakshuka-style)","whole grain waffle","naan"];
+  const DIET_LABEL = { omni: '', pescatarian: 'pescatarian', vegetarian: 'vegetarian', vegan: 'vegan' };
+  let currentDiet = 'omni';
+  try { const d = localStorage.getItem('flexPlateDiet'); if (DIET_LABEL.hasOwnProperty(d)) currentDiet = d; } catch(e) {}
+
+  function allowed(item){
+    if (currentDiet === 'omni') return true;
+    if (MEAT.includes(item)) return false;
+    if (currentDiet !== 'pescatarian' && FISH.includes(item)) return false;
+    if (currentDiet === 'vegan' && DAIRY_EGG.includes(item)) return false;
+    return true;
+  }
+  function proteinsFor(meal){ return MEALS[meal].protein.filter(allowed); }
+
+  const PREP = {
+    omni: {
+      sun: "roast or grill a large tray of one protein, cook a big pot of rice or quinoa, roast a full sheet pan of vegetables, hard-boil a dozen eggs.",
+      wed: "a second quick protein (ground turkey, beans), restock fresh veg, refill the treat."
+    },
+    pescatarian: {
+      sun: "cook a big pot of rice or quinoa, roast a full sheet pan of vegetables, hard-boil a dozen eggs, and simmer a pot of lentils or beans for the first half of the week.",
+      wed: "cook fresh fish (salmon, cod, or shrimp take 10–15 min, and cooked fish only keeps a few days), add a quick tofu or bean dish, restock fresh veg, refill the treat."
+    },
+    vegetarian: {
+      sun: "bake a tray of tofu or tempeh, simmer a big pot of lentils or beans, cook rice or quinoa, roast a full sheet pan of vegetables, hard-boil a dozen eggs.",
+      wed: "a second quick protein (a veggie scramble, paneer or halloumi, chickpeas), restock fresh veg, refill the treat."
+    },
+    vegan: {
+      sun: "bake a tray of tofu or tempeh, simmer a big pot of lentils or beans, cook rice or quinoa, roast a full sheet pan of vegetables.",
+      wed: "a second quick protein (chickpeas, edamame, or a tofu scramble), restock fresh veg, refill the treat."
+    }
+  };
+
+  function applyDietVisibility(){
+    document.getElementById('prepSunday').innerHTML = '<b>Big batch:</b> ' + PREP[currentDiet].sun;
+    document.getElementById('prepWednesday').innerHTML = '<b>Top-up:</b> ' + PREP[currentDiet].wed;
+    document.querySelectorAll('[data-diet]').forEach(el => {
+      const t = el.dataset.diet;
+      el.hidden = (t === 'meat' && currentDiet !== 'omni') ||
+        (t === 'fish' && (currentDiet === 'vegetarian' || currentDiet === 'vegan')) ||
+        (t === 'animal' && currentDiet === 'vegan') ||
+        (t === 'vegan' && currentDiet !== 'vegan');
+    });
+    document.querySelectorAll('.diet-tab').forEach(b =>
+      b.classList.toggle('active', b.dataset.dietChoice === currentDiet));
+  }
+
+  function setDiet(d){
+    currentDiet = d;
+    try { localStorage.setItem('flexPlateDiet', d); } catch(e) {}
+    applyDietVisibility();
+    setMeal(currentMeal);
+  }
+
+  function defaultMeal(){
+    const h = new Date().getHours();
+    return h < 11 ? 'breakfast' : (h < 16 ? 'lunch' : 'dinner');
+  }
+
+  let currentMeal = defaultMeal();
+  let lastPlate = null, lastPlateMeal = null;
+  let last3Meals = [], last3Meal = null;
+
+  function pick(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+
+  function renderChips(id, items){
+    document.getElementById(id).innerHTML = items.map(i => '<span class="chip">' + i + '</span>').join('');
+  }
+
+  function setMeal(meal){
+    currentMeal = meal;
+    document.querySelectorAll('.meal-tab').forEach(b =>
+      b.classList.toggle('active', b.dataset.meal === meal));
+    const m = MEALS[meal];
+    renderChips('chips-protein', proteinsFor(meal));
+    renderChips('chips-veg', m.veg);
+    renderChips('chips-carb', m.carb.filter(allowed));
+    document.getElementById('veg-title').textContent = m.label;
+    // clear any results built for a different meal
+    document.getElementById('result').textContent = 'Tap shuffle to build a plate';
+    document.getElementById('recipeBtn1').disabled = true;
+    document.getElementById('recipes1').innerHTML = '';
+    document.getElementById('result3').innerHTML = '<div class="placeholder">Tap shuffle to build 3 meals</div>';
+    document.getElementById('recipeBtn3').disabled = true;
+    document.getElementById('recipes3').innerHTML = '';
+    lastPlate = null; last3Meals = [];
+  }
+
+  function shufflePlate(){
+    const m = MEALS[currentMeal];
+    const p = pick(proteinsFor(currentMeal)), v = pick(m.veg), c = pick(m.carb.filter(allowed));
+    lastPlate = v + ' + ' + p + ' + ' + c;
+    lastPlateMeal = currentMeal;
+    document.getElementById('result').innerHTML =
+      v + '<span class="plus">+</span>' + p + '<span class="plus">+</span>' + c;
+    document.getElementById('recipeBtn1').disabled = false;
+    document.getElementById('recipes1').innerHTML = '';
+  }
+
+  function pickN(arr, n){
+    // shuffle a copy, then take the first n distinct items (wraps if n > arr.length)
+    const shuffled = [...arr].sort(() => Math.random() - 0.5);
+    const out = [];
+    for(let i=0; i<n; i++){ out.push(shuffled[i % shuffled.length]); }
+    return out;
+  }
+
+  function shuffleThree(){
+    const m = MEALS[currentMeal];
+    const proteins = pickN(proteinsFor(currentMeal), 3);
+    const vegs = pickN(m.veg, 3);
+    const carbs = pickN(m.carb.filter(allowed), 3);
+    last3Meal = currentMeal;
+    last3Meals = [0,1,2].map(idx => vegs[idx] + ' + ' + proteins[idx] + ' + ' + carbs[idx]);
+    const rows = [1,2,3].map(i => {
+      const idx = i - 1;
+      return '<div class="meal-row"><span class="meal-num">0' + i + '</span>' +
+        '<span class="meal-combo">' + vegs[idx] +
+        '<span class="plus">+</span>' + proteins[idx] +
+        '<span class="plus">+</span>' + carbs[idx] + '</span></div>';
+    }).join('');
+    document.getElementById('result3').innerHTML = rows;
+    document.getElementById('recipeBtn3').disabled = false;
+    document.getElementById('recipes3').innerHTML = '';
+  }
+
+  function googleUrl(combo, meal){
+    // "broccoli + chicken thighs + a tortilla", "dinner" -> "dinner broccoli chicken thighs tortilla recipe"
+    const terms = combo.split('+').map(s => s.trim().replace(/^a\s+/i, '')).join(' ');
+    return 'https://www.google.com/search?q=' + encodeURIComponent((DIET_LABEL[currentDiet] ? DIET_LABEL[currentDiet] + ' ' : '') + (meal ? meal + ' ' : '') + terms + ' recipe');
+  }
+
+  function findRecipes(combos, targetId, meal){
+    const list = combos.filter(Boolean);
+    if(!list.length) return;
+
+    // One combo: open the Google search straight away
+    if(list.length === 1){
+      window.open(googleUrl(list[0], meal), '_blank', 'noopener');
+      return;
+    }
+
+    // Several combos: show one tappable link each (browsers block multiple auto-opened tabs)
+    document.getElementById(targetId).innerHTML = list.map((c, i) =>
+      '<a class="recipe-card recipe-link" href="' + googleUrl(c, meal) + '" target="_blank" rel="noopener">' +
+      '<span class="meal-num">0' + (i + 1) + '</span> ' + c.replace(/</g, '&lt;') + ' → search Google</a>'
+    ).join('');
+  }
+
+  applyDietVisibility();
+  setMeal(currentMeal);
+</script>
+
+<script>
+  // Build a manifest on the fly so this single file can be "installed" from the browser
+  const manifestIcon = "data:image/png;base64,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";
+  const manifest = {
+    name: "The Flexible Plate",
+    short_name: "Flex Plate",
+    start_url: ".",
+    display: "standalone",
+    background_color: "#1E2A22",
+    theme_color: "#1E2A22",
+    icons: [
+      { src: manifestIcon, sizes: "512x512", type: "image/png" },
+      { src: manifestIcon, sizes: "192x192", type: "image/png" }
+    ]
+  };
+  const manifestBlob = new Blob([JSON.stringify(manifest)], { type: "application/json" });
+  document.getElementById("app-manifest").setAttribute("href", URL.createObjectURL(manifestBlob));
+</script>
+</body>
+</html>
