@@ -191,6 +191,7 @@
     color:var(--gold);
     flex:0 0 20px;
   }
+  .meal-num.meal-name{flex:0 0 76px;text-transform:uppercase;letter-spacing:0.06em;font-size:11px;}
   .meal-combo{
     font-family:'Fraunces',serif;
     font-weight:600;
@@ -360,6 +361,17 @@
       <button class="shuffle-btn" onclick="shufflePlate()">Shuffle my plate</button>
       <button class="recipe-btn" id="recipeBtn1" onclick="findRecipes([lastPlate], 'recipes1', lastPlateMeal)" disabled>Search Google for recipes</button>
       <div class="recipe-results" id="recipes1"></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Plan the whole day.</h2>
+    <div class="shuffle-box">
+      <div class="shuffle-list" id="resultDay"><div class="placeholder">Tap shuffle to build breakfast, lunch and dinner</div></div>
+      <button class="hl-toggle" id="hlToggleD" aria-pressed="false" onclick="toggleHighlights('D')">Use highlighted ingredients: OFF</button>
+      <button class="shuffle-btn" onclick="shuffleDay()">Shuffle all 3 meals</button>
+      <button class="recipe-btn" id="recipeBtnD" onclick="findRecipes(lastDayMeals, 'recipesD', DAY_MEALS)" disabled>Search Google for the day</button>
+      <div class="recipe-results" id="recipesD"></div>
     </div>
   </div>
 
@@ -539,9 +551,11 @@
     lastPlate = null; last3Meals = [];
   }
 
-  let useHighlights1 = true, useHighlights3 = false;
+  let useHighlights1 = true, useHighlights3 = false, useHighlightsD = false;
   function toggleHighlights(which){
-    const on = which === 1 ? (useHighlights1 = !useHighlights1) : (useHighlights3 = !useHighlights3);
+    const on = which === 1 ? (useHighlights1 = !useHighlights1)
+             : which === 'D' ? (useHighlightsD = !useHighlightsD)
+             : (useHighlights3 = !useHighlights3);
     const b = document.getElementById('hlToggle' + which);
     b.classList.toggle('on', on);
     b.setAttribute('aria-pressed', String(on));
@@ -590,6 +604,32 @@
     document.getElementById('recipeBtn3').disabled = false;
     document.getElementById('recipes3').innerHTML = '';
     setShuffleIngredients('3-' + currentMeal, { protein: proteins, veg: vegs, carb: carbs });
+  }
+
+  // One plate each for breakfast, lunch and dinner, regardless of the selected meal tab.
+  const DAY_MEALS = ['breakfast', 'lunch', 'dinner'];
+  let lastDayMeals = [];
+  function shuffleDay(){
+    const src = (cat, items) => useHighlightsD ? pool(cat, items) : items;
+    const plates = DAY_MEALS.map(meal => {
+      const m = MEALS[meal];
+      return {
+        meal,
+        p: pick(src('protein', proteinsFor(meal))),
+        v: pick(src('veg', m.veg)),
+        c: pick(src('carb', m.carb.filter(allowed)))
+      };
+    });
+    lastDayMeals = plates.map(x => x.v + ' + ' + x.p + ' + ' + x.c);
+    document.getElementById('resultDay').innerHTML = plates.map(x =>
+      '<div class="meal-row"><span class="meal-num meal-name">' + x.meal + '</span>' +
+      '<span class="meal-combo">' + x.v + '<span class="plus">+</span>' + x.p +
+      '<span class="plus">+</span>' + x.c + '</span></div>').join('');
+    document.getElementById('recipeBtnD').disabled = false;
+    document.getElementById('recipesD').innerHTML = '';
+    setShuffleIngredients('day', {
+      protein: plates.map(x => x.p), veg: plates.map(x => x.v), carb: plates.map(x => x.c)
+    });
   }
 
   // ---- Shopping list sync ----
@@ -708,7 +748,7 @@
 
     // Several combos: show one tappable link each (browsers block multiple auto-opened tabs)
     document.getElementById(targetId).innerHTML = list.map((c, i) =>
-      '<a class="recipe-card recipe-link" href="' + googleUrl(c, meal) + '" target="_blank" rel="noopener">' +
+      '<a class="recipe-card recipe-link" href="' + googleUrl(c, Array.isArray(meal) ? meal[i] : meal) + '" target="_blank" rel="noopener">' +
       '<span class="meal-num">0' + (i + 1) + '</span> ' + c.replace(/</g, '&lt;') + ' → search Google</a>'
     ).join('');
   }
