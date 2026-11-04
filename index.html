@@ -191,6 +191,8 @@
     color:var(--gold);
     flex:0 0 20px;
   }
+  .search-row{display:flex;gap:8px;margin-top:10px;}
+  .search-row .recipe-btn{flex:1;margin-top:0;padding:10px 6px;letter-spacing:0.03em;}
   .meal-num.meal-name{flex:0 0 76px;text-transform:uppercase;letter-spacing:0.06em;font-size:11px;}
   .meal-combo{
     font-family:'Fraunces',serif;
@@ -370,8 +372,11 @@
       <div class="shuffle-list" id="resultDay"><div class="placeholder">Tap shuffle to build breakfast, lunch and dinner</div></div>
       <button class="hl-toggle" id="hlToggleD" aria-pressed="false" onclick="toggleHighlights('D')">Use highlighted ingredients: OFF</button>
       <button class="shuffle-btn" onclick="shuffleDay()">Shuffle all 3 meals</button>
-      <button class="recipe-btn" id="recipeBtnD" onclick="findRecipes(lastDayMeals, 'recipesD', DAY_MEALS)" disabled>Search Google for the day</button>
-      <div class="recipe-results" id="recipesD"></div>
+      <div class="search-row" id="searchD">
+        <button class="recipe-btn" onclick="searchOne('D', 0)" disabled>Google breakfast</button>
+        <button class="recipe-btn" onclick="searchOne('D', 1)" disabled>Google lunch</button>
+        <button class="recipe-btn" onclick="searchOne('D', 2)" disabled>Google dinner</button>
+      </div>
     </div>
   </div>
 
@@ -386,8 +391,11 @@
       <div class="shuffle-list" id="result3"><div class="placeholder">Tap shuffle to build 3 meals</div></div>
       <button class="hl-toggle" id="hlToggle3" aria-pressed="false" onclick="toggleHighlights(3)">Use highlighted ingredients: OFF</button>
       <button class="shuffle-btn" onclick="shuffleThree()">Shuffle 3 meals</button>
-      <button class="recipe-btn" id="recipeBtn3" onclick="findRecipes(last3Meals, 'recipes3', last3Meal)" disabled>Search Google for these 3</button>
-      <div class="recipe-results" id="recipes3"></div>
+      <div class="search-row" id="search3">
+        <button class="recipe-btn" onclick="searchOne(3, 0)" disabled>Google 01</button>
+        <button class="recipe-btn" onclick="searchOne(3, 1)" disabled>Google 02</button>
+        <button class="recipe-btn" onclick="searchOne(3, 2)" disabled>Google 03</button>
+      </div>
     </div>
   </div>
 
@@ -547,8 +555,7 @@
     document.getElementById('recipeBtn1').disabled = true;
     document.getElementById('recipes1').innerHTML = '';
     document.getElementById('result3').innerHTML = '<div class="placeholder">Tap shuffle to build 3 meals</div>';
-    document.getElementById('recipeBtn3').disabled = true;
-    document.getElementById('recipes3').innerHTML = '';
+    setSearchRow('search3', false);
     lastPlate = null; last3Meals = [];
   }
 
@@ -602,8 +609,7 @@
         '<span class="plus">+</span>' + carbs[idx] + '</span></div>';
     }).join('');
     document.getElementById('result3').innerHTML = rows;
-    document.getElementById('recipeBtn3').disabled = false;
-    document.getElementById('recipes3').innerHTML = '';
+    setSearchRow('search3', true);
     setShuffleIngredients('3-' + currentMeal, { protein: proteins, veg: vegs, carb: carbs });
   }
 
@@ -626,8 +632,7 @@
       '<div class="meal-row"><span class="meal-num meal-name">' + x.meal + '</span>' +
       '<span class="meal-combo">' + x.v + '<span class="plus">+</span>' + x.p +
       '<span class="plus">+</span>' + x.c + '</span></div>').join('');
-    document.getElementById('recipeBtnD').disabled = false;
-    document.getElementById('recipesD').innerHTML = '';
+    setSearchRow('searchD', true);
     setShuffleIngredients('day', {
       protein: plates.map(x => x.p), veg: plates.map(x => x.v), carb: plates.map(x => x.c)
     });
@@ -730,6 +735,16 @@
   }
 
   document.querySelectorAll('.shop-item input').forEach(i => i.addEventListener('change', onShopToggle));
+
+  function setSearchRow(id, on){
+    document.querySelectorAll('#' + id + ' button').forEach(b => b.disabled = !on);
+  }
+  // One tap = one Google search for that numbered plate
+  function searchOne(which, i){
+    const combo = which === 'D' ? lastDayMeals[i] : last3Meals[i];
+    const meal = which === 'D' ? DAY_MEALS[i] : last3Meal;
+    if (combo) window.open(googleUrl(combo, meal), '_blank', 'noopener');
+  }
 
   function googleUrl(combo, meal){
     // "broccoli + chicken thighs + a tortilla", "dinner" -> "dinner broccoli chicken thighs tortilla recipe"
