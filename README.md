@@ -5,6 +5,7 @@ A single-file meal planner that builds plates from a protein + vegetable + carb,
 ## Features
 
 - **Diet filter** — Everything, Pescatarian, Vegetarian, or Vegan; filters every suggestion, shuffle, and shopping item (remembered between visits).
+- **Budget tiers** — $ Thrifty, $$ Moderate, or $$$ Splurge; filters ingredients, shuffles, and shopping items by estimated cost per serving, shows ≈ cost per plate/day, and estimates the shopping list total (remembered between visits).
 - **Meal-specific building blocks** — separate ingredient lists for breakfast, lunch, and dinner.
 - **Highlight ingredients** — tap chips to mark what you have on hand; shuffles can draw only from those.
 - **Shuffle my plate** — one random combo for the chosen meal.
@@ -28,4 +29,3 @@ README.md
 
 - Package as an Android app
 - Calorie / macronutrient tracking
-- Grocery budget planning
