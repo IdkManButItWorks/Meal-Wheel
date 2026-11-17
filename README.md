@@ -7,7 +7,7 @@ A single-file meal planner that builds plates from a protein + vegetable + carb,
 - **Diet filter** — Everything, Pescatarian, Vegetarian, or Vegan; filters every suggestion, shuffle, and shopping item (remembered between visits).
 - **Budget tiers** — $ Thrifty, $$ Moderate, or $$$ Splurge; filters ingredients, shuffles, and shopping items by estimated cost per serving, shows ≈ cost per plate/day, and estimates the shopping list total (remembered between visits).
 - **Meal-specific building blocks** — separate ingredient lists for breakfast, lunch, and dinner.
-- **Highlight ingredients** — tap chips to mark what you have on hand; shuffles can draw only from those.
+- **Highlight or exclude ingredients** — tap a chip once to highlight it (shuffles can draw only from highlighted items), twice to exclude it from every shuffle, and a third time to reset.
 - **Shuffle my plate** — one random combo for the chosen meal.
 - **Shuffle 3** — three combos at once for weekly shopping.
 - **Recipe search** — opens a prefilled Google search built from the combo, meal, and diet.

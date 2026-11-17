@@ -101,6 +101,7 @@
   }
   .chip.sel-chip{cursor:pointer;-webkit-tap-highlight-color:transparent;user-select:none;}
   .chip.sel-chip.on{background:var(--gold);color:#1E2A22;border:1px solid var(--gold);font-weight:700;}
+  .chip.sel-chip.off{background:transparent;color:var(--coral);border:1px solid var(--coral);text-decoration:line-through;opacity:0.85;}
 
   .hl-toggle{
     display:block;width:100%;margin:0 0 12px;padding:10px 12px;
@@ -388,6 +389,7 @@
     </div>
 
     <h2 class="sub-h2">The building blocks</h2>
+    <p class="section-note">Tap an ingredient once to highlight it, again to exclude it, and a third time to reset. Excluded items never show up in a shuffle.</p>
 
     <div class="cat-card">
       <div class="cat-head"><span class="dot" style="background:var(--slate)"></span><span class="cat-title">Protein</span></div>
@@ -651,26 +653,41 @@
 
   // Tapped (highlighted) building-block items, per category. Empty = use everything.
   const selected = { protein: new Set(), veg: new Set(), carb: new Set() };
+  // Excluded (tapped twice) items, per category. Always left out of shuffles.
+  const excluded = { protein: new Set(), veg: new Set(), carb: new Set() };
 
   function renderChips(id, items, cat){
     const row = document.getElementById(id);
     row.innerHTML = '';
     items.forEach(i => {
       const b = document.createElement('span');
-      b.className = 'chip sel-chip' + (selected[cat].has(i) ? ' on' : '');
+      const paint = () => {
+        const inc = selected[cat].has(i), exc = excluded[cat].has(i);
+        b.className = 'chip sel-chip' + (inc ? ' on' : exc ? ' off' : '');
+        b.setAttribute('aria-label', i + (inc ? ' (included)' : exc ? ' (excluded)' : ''));
+      };
+      b.setAttribute('role', 'button');
       b.textContent = i;
+      paint();
+      // default -> highlighted -> excluded -> default
       b.onclick = () => {
-        if (selected[cat].has(i)) selected[cat].delete(i); else selected[cat].add(i);
-        b.classList.toggle('on');
+        if (selected[cat].has(i)) { selected[cat].delete(i); excluded[cat].add(i); }
+        else if (excluded[cat].has(i)) { excluded[cat].delete(i); }
+        else { selected[cat].add(i); }
+        paint();
       };
       row.appendChild(b);
     });
   }
 
-  // Highlighted items that are available right now; falls back to the full list if none.
-  function pool(cat, items){
-    const hit = items.filter(i => selected[cat].has(i));
-    return hit.length ? hit : items;
+  // Items a shuffle can draw from: never excluded ones (unless that would leave nothing),
+  // and, when highlights are on, only highlighted ones if any are available.
+  function pool(cat, items, useHighlights){
+    const avail = items.filter(i => !excluded[cat].has(i));
+    const base = avail.length ? avail : items;
+    if (!useHighlights) return base;
+    const hit = base.filter(i => selected[cat].has(i));
+    return hit.length ? hit : base;
   }
 
   function setMeal(meal){
@@ -705,7 +722,7 @@
 
   function shufflePlate(){
     const m = MEALS[currentMeal];
-    const src = (cat, items) => useHighlights1 ? pool(cat, items) : items;
+    const src = (cat, items) => pool(cat, items, useHighlights1);
     const p = pick(src('protein', proteinsFor(currentMeal))),
           v = pick(src('veg', m.veg.filter(allowed))),
           c = pick(src('carb', m.carb.filter(allowed)));
@@ -729,7 +746,7 @@
 
   function shuffleThree(){
     const m = MEALS[currentMeal];
-    const src = (cat, items) => useHighlights3 ? pool(cat, items) : items;
+    const src = (cat, items) => pool(cat, items, useHighlights3);
     const proteins = pickN(src('protein', proteinsFor(currentMeal)), 3);
     const vegs = pickN(src('veg', m.veg.filter(allowed)), 3);
     const carbs = pickN(src('carb', m.carb.filter(allowed)), 3);
@@ -754,7 +771,7 @@
   const DAY_MEALS = ['breakfast', 'lunch', 'dinner'];
   let lastDayMeals = [];
   function shuffleDay(){
-    const src = (cat, items) => useHighlightsD ? pool(cat, items) : items;
+    const src = (cat, items) => pool(cat, items, useHighlightsD);
     const plates = DAY_MEALS.map(meal => {
       const m = MEALS[meal];
       return {
