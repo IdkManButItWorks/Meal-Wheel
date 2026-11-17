@@ -70,6 +70,18 @@
   }
   .section{margin-top:40px;}
   .sub-h2{margin-top:28px;}
+  .blocks-toggle{
+    display:flex;align-items:center;gap:10px;width:100%;margin:6px 0 0;padding:14px 16px;
+    background:var(--bg-card);border:1px solid var(--line);border-radius:14px;
+    color:var(--ink);cursor:pointer;text-align:left;font:inherit;
+  }
+  .blocks-toggle:active{transform:scale(0.99);}
+  .bt-title{font-family:'Fraunces',serif;font-weight:600;font-size:19px;flex:1 0 auto;white-space:nowrap;}
+  .bt-summary{font-family:'Space Mono',monospace;font-size:11.5px;color:var(--ink-dim);text-align:right;min-width:0;}
+  .bt-summary.active{color:var(--gold);}
+  .bt-chev{flex:0 0 auto;width:8px;height:8px;margin:0 4px 0 2px;border-right:2px solid var(--gold);border-bottom:2px solid var(--gold);transform:rotate(-45deg);transition:transform .15s;}
+  .blocks-toggle[aria-expanded="true"] .bt-chev{transform:rotate(45deg);}
+  #blocks-body{margin-top:14px;}
   .section-note{color:var(--ink-dim);font-size:14px;margin:0 0 18px;}
 
   /* Category cards */
@@ -396,22 +408,28 @@
       <button class="meal-tab" data-meal="dinner" onclick="setMeal('dinner')">Dinner</button>
     </div>
 
-    <h2 class="sub-h2">The building blocks</h2>
-    <p class="section-note">Tap an ingredient once to highlight it, again to exclude it, and a third time to reset. Excluded items never show up in a shuffle.</p>
+    <button class="blocks-toggle" id="blocks-toggle" aria-expanded="false" aria-controls="blocks-body" onclick="toggleBlocks()">
+      <span class="bt-title">The building blocks</span>
+      <span class="bt-summary" id="blocks-summary">Tap to customize</span>
+      <span class="bt-chev" aria-hidden="true"></span>
+    </button>
+    <div id="blocks-body" hidden>
+      <p class="section-note">Tap an ingredient once to highlight it, again to exclude it, and a third time to reset. Excluded items never show up in a shuffle.</p>
 
-    <div class="cat-card">
-      <div class="cat-head"><span class="dot" style="background:var(--slate)"></span><span class="cat-title">Protein</span></div>
-      <div class="chip-row" id="chips-protein"></div>
-    </div>
+      <div class="cat-card">
+        <div class="cat-head"><span class="dot" style="background:var(--slate)"></span><span class="cat-title">Protein</span></div>
+        <div class="chip-row" id="chips-protein"></div>
+      </div>
 
-    <div class="cat-card">
-      <div class="cat-head"><span class="dot" style="background:var(--sage)"></span><span class="cat-title" id="veg-title">Vegetables</span></div>
-      <div class="chip-row" id="chips-veg"></div>
-    </div>
+      <div class="cat-card">
+        <div class="cat-head"><span class="dot" style="background:var(--sage)"></span><span class="cat-title" id="veg-title">Vegetables</span></div>
+        <div class="chip-row" id="chips-veg"></div>
+      </div>
 
-    <div class="cat-card">
-      <div class="cat-head"><span class="dot" style="background:var(--tan)"></span><span class="cat-title">Carb</span></div>
-      <div class="chip-row" id="chips-carb"></div>
+      <div class="cat-card">
+        <div class="cat-head"><span class="dot" style="background:var(--tan)"></span><span class="cat-title">Carb</span></div>
+        <div class="chip-row" id="chips-carb"></div>
+      </div>
     </div>
 
   </div>
@@ -665,6 +683,24 @@
   // Excluded (tapped twice) items, per category. Always left out of shuffles.
   const excluded = { protein: new Set(), veg: new Set(), carb: new Set() };
 
+  // Building blocks start collapsed; the header shows how many items are highlighted/excluded.
+  function toggleBlocks(){
+    const btn = document.getElementById('blocks-toggle');
+    const open = btn.getAttribute('aria-expanded') !== 'true';
+    btn.setAttribute('aria-expanded', String(open));
+    document.getElementById('blocks-body').hidden = !open;
+  }
+  function updateBlocksSummary(){
+    const count = sets => Object.values(sets).reduce((n, set) => n + set.size, 0);
+    const inc = count(selected), exc = count(excluded);
+    const parts = [];
+    if (inc) parts.push(inc + ' in');
+    if (exc) parts.push(exc + ' out');
+    const el = document.getElementById('blocks-summary');
+    el.textContent = parts.length ? parts.join(' \u00b7 ') : 'Tap to customize';
+    el.classList.toggle('active', parts.length > 0);
+  }
+
   function renderChips(id, items, cat){
     const row = document.getElementById(id);
     row.innerHTML = '';
@@ -684,6 +720,7 @@
         else if (excluded[cat].has(i)) { excluded[cat].delete(i); }
         else { selected[cat].add(i); }
         paint();
+        updateBlocksSummary();
       };
       row.appendChild(b);
     });
