@@ -8,8 +8,7 @@ A single-file meal planner that builds plates from a protein + vegetable + carb,
 - **Budget tiers** — $ Thrifty, $$ Moderate, or $$$ Splurge; filters ingredients, shuffles, and shopping items by estimated cost per serving, shows ≈ cost per plate/day, and estimates the shopping list total (remembered between visits).
 - **Meal-specific building blocks** — separate ingredient lists for breakfast, lunch, and dinner.
 - **Highlight or exclude ingredients** — tap a chip once to highlight it (shuffles can draw only from highlighted items), twice to exclude it from every shuffle, and a third time to reset.
-- **Shuffle my plate** — one random combo for the chosen meal.
-- **Shuffle 3** — three combos at once for weekly shopping.
+- **Shuffle** — one block with three modes: *One meal* (a single plate for the chosen meal), *Whole day* (breakfast, lunch and dinner), and *Meal prep* (three plates of the same meal for batch cooking). The mode is remembered between visits.
 - **Recipe search** — opens a prefilled Google search built from the combo, meal, and diet.
 - **Shopping list** — grouped checklist that hides items that don't fit your diet.
 - **Print shopping list** — prints a clean, two-column checklist of the checked items (grouped, with tick boxes and estimated prices); use "Save as PDF" to share it from a phone.

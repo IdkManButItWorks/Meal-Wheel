@@ -313,6 +313,14 @@
   .budget-tab.active{background:var(--tan);border-color:var(--tan);color:#1E2A22;font-weight:700;}
   .budget-tab:not(.active):active{transform:scale(0.98);}
   .budget-note{margin:-6px 0 0;}
+  .mode-tabs{display:grid;grid-template-columns:1fr 1fr 1fr;}
+  .mode-tab{
+    font-family:'Space Mono',monospace;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;
+    background:transparent;color:var(--ink-dim);border:1px solid var(--line);
+    padding:10px 6px;border-radius:9px;cursor:pointer;
+  }
+  .mode-tab.active{background:var(--slate);border-color:var(--slate);color:#1E2A22;font-weight:700;}
+  .mode-tab:not(.active):active{transform:scale(0.98);}
   .cost{
     display:block;margin-top:4px;
     font-family:'Space Mono',monospace;font-size:11.5px;font-weight:400;
@@ -410,49 +418,50 @@
 
   <div class="section">
     <h2>Can't decide? Shuffle it.</h2>
-    <div class="meal-tabs">
+    <p class="section-note" id="shuffle-note"></p>
+    <div class="meal-tabs mode-tabs">
+      <button class="mode-tab" data-mode="1" onclick="setShuffleMode('1')">One meal</button>
+      <button class="mode-tab" data-mode="D" onclick="setShuffleMode('D')">Whole day</button>
+      <button class="mode-tab" data-mode="3" onclick="setShuffleMode('3')">Meal prep</button>
+    </div>
+    <div class="meal-tabs" id="shuffle-meal-tabs">
       <button class="meal-tab" data-meal="breakfast" onclick="setMeal('breakfast')">Breakfast</button>
       <button class="meal-tab" data-meal="lunch" onclick="setMeal('lunch')">Lunch</button>
       <button class="meal-tab" data-meal="dinner" onclick="setMeal('dinner')">Dinner</button>
     </div>
     <div class="shuffle-box">
-      <div class="shuffle-result" id="result">Tap shuffle to build a plate</div>
-      <button class="hl-toggle on" id="hlToggle1" aria-pressed="true" onclick="toggleHighlights(1)">Use highlighted ingredients: ON</button>
-      <button class="shuffle-btn" onclick="shufflePlate()">Shuffle my plate</button>
-      <button class="recipe-btn" id="recipeBtn1" onclick="findRecipes([lastPlate], 'recipes1', lastPlateMeal)" disabled>Search Google for recipes</button>
-      <div class="recipe-results" id="recipes1"></div>
-    </div>
-  </div>
-
-  <div class="section">
-    <h2>Plan the whole day.</h2>
-    <div class="shuffle-box">
-      <div class="shuffle-list" id="resultDay"><div class="placeholder">Tap shuffle to build breakfast, lunch and dinner</div></div>
-      <button class="hl-toggle" id="hlToggleD" aria-pressed="false" onclick="toggleHighlights('D')">Use highlighted ingredients: OFF</button>
-      <button class="shuffle-btn" onclick="shuffleDay()">Shuffle all 3 meals</button>
-      <div class="search-row" id="searchD">
-        <button class="recipe-btn" onclick="searchOne('D', 0)" disabled>Google breakfast</button>
-        <button class="recipe-btn" onclick="searchOne('D', 1)" disabled>Google lunch</button>
-        <button class="recipe-btn" onclick="searchOne('D', 2)" disabled>Google dinner</button>
+      <div class="shuffle-pane" data-pane="1">
+        <div class="shuffle-result" id="result">Tap shuffle to build a plate</div>
       </div>
-    </div>
-  </div>
+      <div class="shuffle-pane" data-pane="D" hidden>
+        <div class="shuffle-list" id="resultDay"><div class="placeholder">Tap shuffle to build breakfast, lunch and dinner</div></div>
+      </div>
+      <div class="shuffle-pane" data-pane="3" hidden>
+        <div class="shuffle-list" id="result3"><div class="placeholder">Tap shuffle to build 3 meals</div></div>
+      </div>
 
-  <div class="section">
-    <h2>Meal Prepper? Shuffle 3 <span id="prep-meal">dinners</span>.</h2>
-    <div class="meal-tabs">
-      <button class="meal-tab" data-meal="breakfast" onclick="setMeal('breakfast')">Breakfast</button>
-      <button class="meal-tab" data-meal="lunch" onclick="setMeal('lunch')">Lunch</button>
-      <button class="meal-tab" data-meal="dinner" onclick="setMeal('dinner')">Dinner</button>
-    </div>
-    <div class="shuffle-box">
-      <div class="shuffle-list" id="result3"><div class="placeholder">Tap shuffle to build 3 meals</div></div>
-      <button class="hl-toggle" id="hlToggle3" aria-pressed="false" onclick="toggleHighlights(3)">Use highlighted ingredients: OFF</button>
-      <button class="shuffle-btn" onclick="shuffleThree()">Shuffle 3 meals</button>
-      <div class="search-row" id="search3">
-        <button class="recipe-btn" onclick="searchOne(3, 0)" disabled>Google 01</button>
-        <button class="recipe-btn" onclick="searchOne(3, 1)" disabled>Google 02</button>
-        <button class="recipe-btn" onclick="searchOne(3, 2)" disabled>Google 03</button>
+      <button class="hl-toggle on" id="hlToggle" aria-pressed="true" onclick="toggleHighlights()">Use highlighted ingredients: ON</button>
+
+      <div class="shuffle-pane" data-pane="1">
+        <button class="shuffle-btn" onclick="shufflePlate()">Shuffle my plate</button>
+        <button class="recipe-btn" id="recipeBtn1" onclick="findRecipes([lastPlate], 'recipes1', lastPlateMeal)" disabled>Search Google for recipes</button>
+        <div class="recipe-results" id="recipes1"></div>
+      </div>
+      <div class="shuffle-pane" data-pane="D" hidden>
+        <button class="shuffle-btn" onclick="shuffleDay()">Shuffle all 3 meals</button>
+        <div class="search-row" id="searchD">
+          <button class="recipe-btn" onclick="searchOne('D', 0)" disabled>Google breakfast</button>
+          <button class="recipe-btn" onclick="searchOne('D', 1)" disabled>Google lunch</button>
+          <button class="recipe-btn" onclick="searchOne('D', 2)" disabled>Google dinner</button>
+        </div>
+      </div>
+      <div class="shuffle-pane" data-pane="3" hidden>
+        <button class="shuffle-btn" onclick="shuffleThree()">Shuffle 3 <span id="prep-meal">dinners</span></button>
+        <div class="search-row" id="search3">
+          <button class="recipe-btn" onclick="searchOne(3, 0)" disabled>Google 01</button>
+          <button class="recipe-btn" onclick="searchOne(3, 1)" disabled>Google 02</button>
+          <button class="recipe-btn" onclick="searchOne(3, 2)" disabled>Google 03</button>
+        </div>
       </div>
     </div>
   </div>
@@ -709,20 +718,40 @@
     lastPlate = null; last3Meals = [];
   }
 
-  let useHighlights1 = true, useHighlights3 = false, useHighlightsD = false;
-  function toggleHighlights(which){
-    const on = which === 1 ? (useHighlights1 = !useHighlights1)
-             : which === 'D' ? (useHighlightsD = !useHighlightsD)
-             : (useHighlights3 = !useHighlights3);
-    const b = document.getElementById('hlToggle' + which);
+  // One highlights switch shared by every shuffle mode.
+  let useHighlights = true;
+  function toggleHighlights(){
+    const on = useHighlights = !useHighlights;
+    const b = document.getElementById('hlToggle');
     b.classList.toggle('on', on);
     b.setAttribute('aria-pressed', String(on));
     b.textContent = 'Use highlighted ingredients: ' + (on ? 'ON' : 'OFF');
   }
 
+  // Shuffle mode: '1' = one meal, 'D' = whole day, '3' = meal prep (3 of the same meal).
+  const MODE_NOTES = {
+    '1': 'One random plate for the meal you pick.',
+    'D': 'One plate each for breakfast, lunch and dinner.',
+    '3': 'Three different plates for the same meal, for batch cooking.'
+  };
+  let shuffleMode = '1';
+  try { const m = localStorage.getItem('flexPlateShuffleMode'); if (MODE_NOTES[m]) shuffleMode = m; } catch(e) {}
+  function setShuffleMode(m){
+    shuffleMode = m;
+    try { localStorage.setItem('flexPlateShuffleMode', m); } catch(e) {}
+    document.querySelectorAll('.mode-tab').forEach(b => {
+      const on = b.dataset.mode === m;
+      b.classList.toggle('active', on);
+      b.setAttribute('aria-pressed', String(on));
+    });
+    document.querySelectorAll('.shuffle-pane').forEach(p => p.hidden = p.dataset.pane !== m);
+    document.getElementById('shuffle-meal-tabs').hidden = m === 'D';
+    document.getElementById('shuffle-note').textContent = MODE_NOTES[m];
+  }
+
   function shufflePlate(){
     const m = MEALS[currentMeal];
-    const src = (cat, items) => pool(cat, items, useHighlights1);
+    const src = (cat, items) => pool(cat, items, useHighlights);
     const p = pick(src('protein', proteinsFor(currentMeal))),
           v = pick(src('veg', m.veg.filter(allowed))),
           c = pick(src('carb', m.carb.filter(allowed)));
@@ -746,7 +775,7 @@
 
   function shuffleThree(){
     const m = MEALS[currentMeal];
-    const src = (cat, items) => pool(cat, items, useHighlights3);
+    const src = (cat, items) => pool(cat, items, useHighlights);
     const proteins = pickN(src('protein', proteinsFor(currentMeal)), 3);
     const vegs = pickN(src('veg', m.veg.filter(allowed)), 3);
     const carbs = pickN(src('carb', m.carb.filter(allowed)), 3);
@@ -771,7 +800,7 @@
   const DAY_MEALS = ['breakfast', 'lunch', 'dinner'];
   let lastDayMeals = [];
   function shuffleDay(){
-    const src = (cat, items) => pool(cat, items, useHighlightsD);
+    const src = (cat, items) => pool(cat, items, useHighlights);
     const plates = DAY_MEALS.map(meal => {
       const m = MEALS[meal];
       return {
@@ -977,6 +1006,7 @@
 
   applyDietVisibility();
   setMeal(currentMeal);
+  setShuffleMode(shuffleMode);
 </script>
 
 <script>
