@@ -299,7 +299,8 @@
   .item-label{transition:color .12s, opacity .12s;}
   .shop-item input:not(:checked) ~ .item-label{color:var(--ink-dim);}
   .shop-item input:checked ~ .item-label{color:var(--ink);font-weight:600;}
-  .shop-clear{margin:0 0 18px;}
+  .shop-actions{display:flex;gap:8px;margin:0 0 18px;}
+  .shop-actions .recipe-btn{flex:1;margin-top:0;}
 
   /* Budget */
   .budget-tabs{display:grid;grid-template-columns:1fr 1fr 1fr;}
@@ -323,6 +324,27 @@
   .shop-total{
     font-family:'Space Mono',monospace;font-size:12.5px;color:var(--tan);
     margin:-6px 0 18px;
+  }
+
+  /* Printable shopping list (only shown on paper) */
+  #print-sheet{display:none;}
+  @media print{
+    @page{margin:16mm;}
+    html,body{background:#fff !important;color:#000;padding:0;}
+    .wrap{display:none !important;}
+    #print-sheet{display:block;color:#000;font-family:'Inter',sans-serif;}
+    #print-sheet h1{font-family:'Fraunces',serif;font-size:26px;color:#000;margin:0 0 4px;}
+    .ps-meta{font-family:'Space Mono',monospace;font-size:11px;color:#444;margin:0 0 18px;}
+    .ps-columns{column-count:2;column-gap:28px;}
+    .ps-group{break-inside:avoid;margin:0 0 16px;}
+    .ps-group h2{
+      font-family:'Space Mono',monospace;font-size:11px;font-weight:700;letter-spacing:0.1em;
+      text-transform:uppercase;color:#000;margin:0 0 6px;padding-bottom:4px;border-bottom:1px solid #000;
+    }
+    .ps-item{display:flex;align-items:center;gap:10px;font-size:13.5px;padding:5px 0;border-bottom:1px dotted #bbb;}
+    .ps-box{width:13px;height:13px;flex:0 0 auto;border:1.5px solid #000;border-radius:2px;}
+    .ps-price{margin-left:auto;font-family:'Space Mono',monospace;font-size:11px;color:#555;}
+    .ps-empty{font-size:14px;color:#444;}
   }
 
   @media (prefers-reduced-motion: reduce){
@@ -436,7 +458,10 @@
   <div class="section">
     <h2>Shopping list</h2>
     <p class="section-note">Ingredients from your shuffles are checked automatically. Tap any item to add or remove it.</p>
-    <button class="recipe-btn shop-clear" onclick="clearShopping()">Clear list</button>
+    <div class="shop-actions">
+      <button class="recipe-btn" onclick="printShopping()">Print list</button>
+      <button class="recipe-btn" onclick="clearShopping()">Clear list</button>
+    </div>
     <p class="shop-total" id="shop-total"></p>
 
     <div class="shop-group">
@@ -483,6 +508,8 @@
   </div>
 
 </div>
+
+<div id="print-sheet" aria-hidden="true"></div>
 
 <script>
   const MEALS = {
@@ -854,6 +881,49 @@
   }
 
   document.querySelectorAll('.shop-item input').forEach(i => i.addEventListener('change', onShopToggle));
+
+  // ---- Print ----
+  // Builds a clean, paper-friendly copy of the checked (and visible) items, grouped by aisle,
+  // with empty tick boxes to mark off in the store. Runs on the button and on the browser's own Print.
+  function buildPrintSheet(){
+    const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;');
+    let total = 0, count = 0;
+    const groups = [...document.querySelectorAll('.shop-group')].map(g => ({
+      title: g.querySelector('.shop-group-title').textContent.trim(),
+      items: [...g.querySelectorAll('.shop-item')]
+        .filter(el => !el.hidden && el.querySelector('input').checked)
+        .map(el => {
+          const price = +el.dataset.price || 0;
+          total += price; count++;
+          return { label: el.querySelector('.item-label').textContent.trim(), price };
+        })
+    })).filter(g => g.items.length);
+
+    const date = new Date().toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' });
+    const meta = 'The Flexible Plate \u00b7 ' + date + (count
+      ? ' \u00b7 ' + count + ' item' + (count === 1 ? '' : 's') + ' \u00b7 est. ~$' + Math.round(total)
+      : '');
+    document.getElementById('print-sheet').innerHTML =
+      '<h1>Shopping list</h1><p class="ps-meta">' + meta + '</p>' +
+      (count
+        ? '<div class="ps-columns">' + groups.map(g =>
+            '<div class="ps-group"><h2>' + esc(g.title) + '</h2>' +
+            g.items.map(i => '<div class="ps-item"><span class="ps-box"></span><span>' + esc(i.label) +
+              '</span><span class="ps-price">~$' + i.price + '</span></div>').join('') +
+            '</div>').join('') + '</div>'
+        : '<p class="ps-empty">No items checked.</p>');
+    return count;
+  }
+
+  function printShopping(){
+    if (!buildPrintSheet()) {
+      document.getElementById('shop-total').textContent = 'Check at least one item, then print.';
+      return;
+    }
+    window.print();
+  }
+
+  window.addEventListener('beforeprint', buildPrintSheet);
 
   function setSearchRow(id, on){
     document.querySelectorAll('#' + id + ' button').forEach(b => b.disabled = !on);

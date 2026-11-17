@@ -12,6 +12,7 @@ A single-file meal planner that builds plates from a protein + vegetable + carb,
 - **Shuffle 3** — three combos at once for weekly shopping.
 - **Recipe search** — opens a prefilled Google search built from the combo, meal, and diet.
 - **Shopping list** — grouped checklist that hides items that don't fit your diet.
+- **Print shopping list** — prints a clean, two-column checklist of the checked items (grouped, with tick boxes and estimated prices); use "Save as PDF" to share it from a phone.
 - **Installable** — includes an icon and a generated web-app manifest, so it can be added to a phone home screen.
 
 ## Running it
