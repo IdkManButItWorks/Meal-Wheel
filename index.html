@@ -59,6 +59,14 @@
     color:var(--ink);
   }
   header p{color:var(--ink-dim);font-size:15px;margin:0;max-width:42ch;}
+  .install-btn{
+    display:inline-flex;align-items:center;gap:8px;margin-top:4px;
+    font-family:'Space Mono',monospace;font-size:12px;letter-spacing:0.06em;text-transform:uppercase;
+    background:var(--gold);color:#1E2A22;border:none;padding:10px 16px;border-radius:9px;
+    cursor:pointer;font-weight:700;
+  }
+  .install-btn:active{transform:scale(0.98);}
+  .install-hint{color:var(--ink-dim);font-size:13.5px;margin:6px 0 0;}
 
   /* Section headings */
   h2{
@@ -394,6 +402,8 @@
 
   <header>
     <h1>PlateO</h1>
+    <button class="install-btn" id="installBtn" hidden onclick="installApp()">Install app</button>
+    <p class="install-hint" id="installHint" hidden>To install: tap Share, then "Add to Home Screen".</p>
   </header>
 
   <div class="section">
@@ -1075,6 +1085,32 @@
   setShuffleMode(shuffleMode);
 </script>
 
+<script>
+  // Install button: Chrome/Android fires beforeinstallprompt when the app can be installed.
+  // The button stays hidden when the app is already installed or the browser can't install it.
+  let deferredInstall = null;
+  const isStandalone = () => window.matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+  window.addEventListener('beforeinstallprompt', e => {
+    e.preventDefault();
+    deferredInstall = e;
+    if (!isStandalone()) document.getElementById('installBtn').hidden = false;
+  });
+  async function installApp(){
+    if (!deferredInstall) return;
+    deferredInstall.prompt();
+    await deferredInstall.userChoice;
+    deferredInstall = null;
+    document.getElementById('installBtn').hidden = true;
+  }
+  window.addEventListener('appinstalled', () => {
+    deferredInstall = null;
+    document.getElementById('installBtn').hidden = true;
+  });
+  // iPhone/iPad Safari has no install prompt, so show a one-line hint instead.
+  if (/iphone|ipad|ipod/i.test(navigator.userAgent) && !isStandalone()) {
+    document.getElementById('installHint').hidden = false;
+  }
+</script>
 <script>
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
