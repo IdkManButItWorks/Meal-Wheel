@@ -1075,5 +1075,12 @@
   setShuffleMode(shuffleMode);
 </script>
 
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('sw.js').catch(err => console.warn('Service worker not registered:', err));
+    });
+  }
+</script>
 </body>
 </html>
