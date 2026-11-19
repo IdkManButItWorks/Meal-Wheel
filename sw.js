@@ -1,8 +1,8 @@
-// Service worker for The Flexible Plate.
+// Service worker for PlateO.
 // Keeps the app working offline: the page and its icons are cached on install,
 // and Google Fonts are cached the first time they load.
 // Bump VERSION whenever you want every installed copy to drop its old cache.
-const VERSION = 'v1';
+const VERSION = 'v2';
 const APP_CACHE = 'flex-plate-app-' + VERSION;
 const FONT_CACHE = 'flex-plate-fonts-' + VERSION;
 

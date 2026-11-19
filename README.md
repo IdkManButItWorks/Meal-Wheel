@@ -1,4 +1,4 @@
-# The Flexible Plate (Meal Wheel)
+# PlateO
 
 A single-file meal planner that builds plates from a protein + vegetable + carb, so meals stay flexible instead of following a fixed menu.
 

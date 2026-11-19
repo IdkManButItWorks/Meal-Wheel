@@ -1,6 +1,6 @@
 {
-  "name": "The Flexible Plate",
-  "short_name": "Flex Plate",
+  "name": "PlateO",
+  "short_name": "PlateO",
   "description": "Build flexible meals from a protein, a vegetable and a carb, with a shopping list to match.",
   "id": "/",
   "start_url": "/",

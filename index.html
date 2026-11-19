@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Flexible Plate</title>
+<title>PlateO</title>
 <link rel="icon" type="image/png" href="icons/icon-192.png">
 <link rel="apple-touch-icon" href="icons/icon-maskable-192.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Flexible Plate">
+<meta name="apple-mobile-web-app-title" content="PlateO">
 <meta name="theme-color" content="#1E2A22">
 <link rel="manifest" href="manifest.json">
 
@@ -393,7 +393,7 @@
 <div class="wrap">
 
   <header>
-    <h1>The Flexible Plate</h1>
+    <h1>PlateO</h1>
   </header>
 
   <div class="section">
@@ -1012,7 +1012,7 @@
     })).filter(g => g.items.length);
 
     const date = new Date().toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' });
-    const meta = 'The Flexible Plate \u00b7 ' + date + (count
+    const meta = 'PlateO \u00b7 ' + date + (count
       ? ' \u00b7 ' + count + ' item' + (count === 1 ? '' : 's') + ' \u00b7 est. ~$' + Math.round(total)
       : '');
     document.getElementById('print-sheet').innerHTML =
